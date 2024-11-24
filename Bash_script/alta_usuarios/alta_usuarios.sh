@@ -10,23 +10,11 @@ clear
 #  Tareas:
 #  - Crear los usuarios segun la lista recibida en los grupos descriptos
 #  - Los usuarios deberan de tener la misma clave que la del usuario pasado por parametro
-#
 ###############################
-
-if [ $# -lt 2 ]; then
-  echo "Error: Se requiere el archivo de usuarios y el usuario para la clave."
-  echo "Uso: $0 <archivo_lista_usuarios> <usuario_contraseña>"
-  exit 1
-fi
 
 LISTA=$1
 USUARIO_CLAVE=$2
 CLAVE=$(sudo grep "$USUARIO_CLAVE" /etc/shadow | awk -F ':' '{print $2}')
-
-if [ -z "$CLAVE" ]; then
-  echo "Error: No se pudo obtener la contraseña del usuario $USUARIO_CLAVE."
-  exit 1
-fi
 
 
 ANT_IFS=$IFS
@@ -38,7 +26,7 @@ do
 	DIRECTORIO=$(echo  $LINEA |awk -F ',' '{print $3}')
 
 	if ! getent group $GRUPO > /dev/null; then
-    	echo "Error: El grupo $GRUPO no existe. Creando el grupo..."
+    	echo "creando el grupo $GRUPO"
     	sudo groupadd $GRUPO
   	fi
 	

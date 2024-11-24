@@ -37,18 +37,16 @@ do
 	echo "$TIMESTAMP - Code:$STATUS_CODE - URL:$URL" |sudo tee -a  "$LOG_FILE"
 	
 	if [ "$STATUS_CODE" -eq 200 ]; then
-    	    echo "$TIMESTAMP - Code:$STATUS_CODE - URL:$URL" | sudo tee -a "/tmp/head-check/ok/$DOMINIO.log" > /dev/null
+    	    echo "$TIMESTAMP - Code:$STATUS_CODE - URL:$URL" | sudo tee -a "/tmp/head-check/ok/$DOMINIO.log"
 	    
 	elif [ "$STATUS_CODE" -ge 400 ] && [ "$STATUS_CODE" -lt 500 ]; then
-    	    echo "$TIMESTAMP - Code:$STATUS_CODE - URL:$URL" | sudo tee -a "/tmp/head-check/Error/cliente/$DOMINIO.log" > /dev/null
+    	    echo "$TIMESTAMP - Code:$STATUS_CODE - URL:$URL" | sudo tee -a "/tmp/head-check/Error/cliente/$DOMINIO.log"
 
     	elif [ "$STATUS_CODE" -ge 500 ] && [ "$STATUS_CODE" -lt 600 ]; then
-            echo "$TIMESTAMP - Code:$STATUS_CODE - URL:$URL" | sudo tee -a "/tmp/head-check/Error/servidor/$DOMINIO.log" > /dev/null
+            echo "$TIMESTAMP - Code:$STATUS_CODE - URL:$URL" | sudo tee -a "/tmp/head-check/Error/servidor/$DOMINIO.log"
 	fi
 done
 
 sudo tree /tmp/head-check
-
-#-------------------------#
 
 IFS=$ANT_IFS
